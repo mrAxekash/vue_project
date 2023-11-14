@@ -2,10 +2,12 @@
   <div class="app">
     <h1>Страница с юзерами</h1>
     <div class="app_btns">
-      <my-button @click="showDialog" style="margin: 15px 0">
+      <my-button @click="showDialog">
         Create user
       </my-button>
-      <my-select></my-select>
+      <my-select v-model="selectedSort" :options="sortOptions" >
+
+      </my-select>
     </div>
 
     <my-dialog v-model:show="dialogVisible">
@@ -36,6 +38,11 @@ import MySelect from "./components/UI/MySelect.vue";
         dialogVisible: false,
         modificatorValue: '',
         isPostLoading: false,
+        selectedSort: '',
+        sortOptions: [
+          {value: 'title', name: 'Title'},
+          {value: 'body', name: 'Description'}
+        ]
       }
     },
     methods: {
