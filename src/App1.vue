@@ -1,10 +1,13 @@
 <template>
   <div class="app">
     <h1>Страница с юзерами</h1>
-    <input type="text" v-model.number="modificatorValue">
-    <my-button @click="showDialog" style="margin: 15px 0">
-      Create user
-    </my-button>
+    <div class="app_btns">
+      <my-button @click="showDialog" style="margin: 15px 0">
+        Create user
+      </my-button>
+      <my-select></my-select>
+    </div>
+
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost" />
     </my-dialog>
@@ -24,8 +27,9 @@ import PostList from "./components/PostList.vue";
 import MyDialog from "./components/UI/MyDialog.vue";
 import MyButton from "./components/UI/MyButton.vue";
 import axios from "axios";
+import MySelect from "./components/UI/MySelect.vue";
   export default {
-    components: {MyButton, MyDialog, PostForm, PostList},
+    components: {MySelect, MyButton, MyDialog, PostForm, PostList},
     data() {
       return {
         posts: [ ],
@@ -73,6 +77,11 @@ import axios from "axios";
   }
   .app {
     margin: 20px;
+  }
+  .app_btns {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
   }
 
 </style>
