@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <h1>Страница с юзерами</h1>
+    <my-input v-model="searchQuery"/>
     <div class="app_btns">
       <my-button @click="showDialog">
         Create user
@@ -16,7 +17,7 @@
 
     <post-list
         @remove="removePost"
-        :posts="posts"
+        :posts="sortedAndSearchedPosts"
         v-if="!isPostLoading"
         />
     <div v-else>Loading...</div>
@@ -30,12 +31,14 @@ import MyDialog from "./components/UI/MyDialog.vue";
 import MyButton from "./components/UI/MyButton.vue";
 import axios from "axios";
 import MySelect from "./components/UI/MySelect.vue";
+import MyInput from "./components/UI/MyInput.vue";
   export default {
-    components: {MySelect, MyButton, MyDialog, PostForm, PostList},
+    components: {MyInput, MySelect, MyButton, MyDialog, PostForm, PostList},
     data() {
       return {
         posts: [ ],
         dialogVisible: false,
+        searchQuery: '',
         modificatorValue: '',
         isPostLoading: false,
         selectedSort: '',
@@ -72,7 +75,23 @@ import MySelect from "./components/UI/MySelect.vue";
     },
     mounted() {
       this.fetchUsers()
-    }
+    },
+    computed: {
+      sortedPost(){
+        return [...this.posts].sort((post1, post2)=> post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+      },
+      sortedAndSearchedPosts() {
+        return this.sortedPost.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+      }
+    },
+    // watch: {
+    //   selectedSort(newvalue) {
+    //     this.posts.sort((post1, post2) => {
+    //       return post1[newvalue]?.localeCompare(post2[newvalue])
+    //     })
+    //   },
+    //
+    // }
   }
 </script>
 

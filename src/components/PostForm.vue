@@ -40,7 +40,7 @@ export default {
     inputTitle(e) {
       this.title = e.target.value;
     }
-  }
+  },
 }
 </script>
 
